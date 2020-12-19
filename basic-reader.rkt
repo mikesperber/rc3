@@ -8,7 +8,22 @@
    `(module basic racket
       (require "basic.rkt")
       (basic
-       ,@(read-program src in)))))
+       ,@(parse-program src in)))))
+
+(define (parse-program src in)
+  (define line (parse-line src in))
+  (if (eof-object? line)
+      '()
+      (cons line (parse-program src in))))
+
+(define (parse-line src in)
+  (regexp-try-match #px"^\\s+" in)
+  (if (eof-object? (peek-char in))
+      eof
+      (let ()
+        (define line-number (get-line-number src in))
+        (define command (parse-command src in))
+        `(,line-number ,command))))
 
 (define (next-token src in (peek? #f))
   (skip-whitespace in)
@@ -42,14 +57,6 @@
     (else
      (complain src in "unknown lexeme"))))
 
-(define (t)
-  (define p (open-input-string "foo bar baz 10"))
-  (define t1 (next-token #f p 'peek))
-  (define t2 (next-token #f p))
-  (define t3 (next-token #f p))
-  (values t1 t2 t3))
-  
-
 (define (tokenize src in)
   (define token (next-token src in))
   (if (eof-object? token)
@@ -68,15 +75,6 @@
 (define (complain src in msg)
   (define-values (line col pos) (port-next-location in))
   (raise-read-error msg src line col pos 1))
-
-(define (parse-line src in)
-  (regexp-try-match #px"^\\s+" in)
-  (if (eof-object? (peek-char in))
-      eof
-      (let ()
-        (define line-number (get-line-number src in))
-        (define command (parse-command src in))
-        `(,line-number ,command))))
 
 (define (parse-command src in)
   (define first-token (next-token src in))
@@ -163,8 +161,4 @@
      expr)
     (else next)))
 
-(define (read-program src in)
-  (define line (parse-line src in))
-  (if (eof-object? line)
-      '()
-      (cons line (read-program src in))))
+
