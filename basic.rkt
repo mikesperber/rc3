@@ -1,6 +1,5 @@
 #lang racket
-(provide (all-from-out racket)
-         basic print goto :=  gosub return)
+(provide basic print goto := gosub return)
 (require (for-syntax syntax/parse
                      racket/syntax
                      syntax/id-set))
