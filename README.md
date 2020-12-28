@@ -9,3 +9,8 @@ To try this out:
 Enjoy!
 
 Let me know if you have questions or comments.
+
+## License
+
+Distributed under the Eclipse Public License either version 1.0 or (at
+your option) any later version.
