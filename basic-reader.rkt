@@ -29,7 +29,7 @@
   (skip-whitespace in)
   (define match (if peek? regexp-match-peek regexp-try-match))
   (cond
-    ((match #rx"^(PRINT|GOTO|GOSUB|RETURN|IF|THEN|ELSE|\\*|\\+|-|/|=|<|>|<=|>=)" in)
+    ((match #rx"^(PRINT|GOTO|GOSUB|RETURN|IF|THEN|ELSE|\\*|\\+|-|/|=|<=|>=|<|>)" in)
      => (lambda (match)
           (string->symbol (bytes->string/utf-8 (car match)))))
     ((match #rx"^\\(" in)
