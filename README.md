@@ -3,8 +3,9 @@
 To try this out:
 
 - download [Racket](https://www.racket-lang.org)
-- open `basic-demo-syntax.rkt`
-- click "run"
+- open the file `basic-demo-syntax.rkt` in the DrRacket
+- in DrRacket click on the Run-Button or hit the F5 key
+- type-in `(line-10)` and press the Enter key
 
 Enjoy!
 
